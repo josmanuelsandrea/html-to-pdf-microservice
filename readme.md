@@ -80,8 +80,8 @@ The command generates a `report.pdf` file in the current directory.
 
 ## Notes
 
-- Ensure that the `templates/example.html` file exists and is properly formatted for rendering.
-- You can modify the `example.html` template to customize the PDF layout and design.
+- Ensure that the `templates/example.review.html` file exists and is properly formatted for rendering.
+- You can modify the `example.review.html` template to customize the PDF layout and design.
 
 ## License
 
