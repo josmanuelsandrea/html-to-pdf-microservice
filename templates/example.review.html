@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .work-order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .work-order-header div {
+            width: 45%;
+        }
+        .description {
+            margin: 20px 0;
+            padding: 10px;
+            background: #f4f4f4;
+            border-left: 4px solid #007bff;
+        }
+        .spare-parts {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .sign-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .signature-line {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-line div {
+            width: 45%;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Orden de trabajo</h1>
+        <div class="work-order-header">
+            <div>
+                <strong>Nro de Orden:</strong>#{{ work_order_id }}<br>
+                <strong>Fecha:</strong> {{ date }}<br>
+                <strong>Cliente:</strong> {{ customer }}<br>
+            </div>
+            <div>
+                <strong>Estado:</strong> Completed<br>
+                <strong>Placa:</strong> {{ plate }}<br>
+                <strong>Modelo:</strong> {{ model }}<br>
+                <strong>Chasis:</strong> {{ chassis }}<br>
+            </div>
+        </div>
+        <div class="description">
+            <strong>Descripcion de trabajo:</strong><br>
+            {{ description }}
+        </div>
+        <h2>Repuestos usados</h2>
+        <div class="spare-parts">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for spare_part in spareList %}
+                    <tr>
+                        <td>{{ spare_part.code }}</td>
+                        <td>{{ spare_part.description }}</td>
+                        <td>{{ spare_part.quantity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Gracias por su confianza</p>
+            <div class="sign-section">
+                <div class="signature-line">
+                    <div>Revisado por bodega</div>
+                    <div>Revisado por taller</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
