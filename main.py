@@ -14,11 +14,11 @@ env = Environment(loader=FileSystemLoader(template_path))
 async def generate_pdf(request: Request):
     # Leer datos dinámicos enviados en el cuerpo del request
     data = await request.json()
-    template_data = data.get("data", {})  # Datos para la plantilla
+    template_data = data.get("Data", {})  # Datos para la plantilla
 
     # Cargar la plantilla example.html
     template = env.get_template("example.review.html")
-    template_data["description"] = template_data["description"].replace("\n", "<br>")
+    template_data["Description"] = template_data["Description"].replace("\n", "<br>")
     html_content = template.render(template_data)  # Renderiza la plantilla con los datos
     
     # Generar el PDF usando WeasyPrint

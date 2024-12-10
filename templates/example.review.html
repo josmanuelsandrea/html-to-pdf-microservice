@@ -82,20 +82,20 @@
         <h1>Orden de trabajo</h1>
         <div class="work-order-header">
             <div>
-                <strong>Nro de Orden:</strong>#{{ work_order_id }}<br>
-                <strong>Fecha:</strong> {{ date }}<br>
-                <strong>Cliente:</strong> {{ customer }}<br>
+                <strong>Nro de Orden:</strong>#{{ WorkOrderId }}<br>
+                <strong>Fecha:</strong> {{ Date }}<br>
+                <strong>Cliente:</strong> {{ Customer }}<br>
             </div>
             <div>
                 <strong>Estado:</strong> Completed<br>
-                <strong>Placa:</strong> {{ plate }}<br>
-                <strong>Modelo:</strong> {{ model }}<br>
-                <strong>Chasis:</strong> {{ chassis }}<br>
+                <strong>Placa:</strong> {{ Plate }}<br>
+                <strong>Modelo:</strong> {{ Model }}<br>
+                <strong>Chasis:</strong> {{ Chassis }}<br>
             </div>
         </div>
         <div class="description">
             <strong>Descripcion de trabajo:</strong><br>
-            {{ description }}
+            {{ Description }}
         </div>
         <h2>Repuestos usados</h2>
         <div class="spare-parts">
@@ -108,11 +108,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for spare_part in spareList %}
+                    {% for spare_part in SpareList %}
                     <tr>
-                        <td>{{ spare_part.code }}</td>
-                        <td>{{ spare_part.description }}</td>
-                        <td>{{ spare_part.quantity }}</td>
+                        <td>{{ spare_part.Code }}</td>
+                        <td>{{ spare_part.Description }}</td>
+                        <td>{{ spare_part.Quantity }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
