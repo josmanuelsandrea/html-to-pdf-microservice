@@ -3,6 +3,8 @@ from fastapi.responses import StreamingResponse
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from io import BytesIO
+from tools.dotstring import add_dots_to_number
+
 import os
 
 app = FastAPI()
@@ -18,7 +20,12 @@ async def generate_pdf(request: Request):
 
     # Cargar la plantilla example.html
     template = env.get_template("example.review.html")
+
     template_data["Description"] = template_data["Description"].replace("\n", "<br>")
+
+    template_data["Kilometers"] = add_dots_to_number(template_data["Kilometers"])
+
+
     html_content = template.render(template_data)  # Renderiza la plantilla con los datos
     
     # Generar el PDF usando WeasyPrint

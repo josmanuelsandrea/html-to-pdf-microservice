@@ -75,11 +75,16 @@
             padding-top: 30px;
             border-top: 1px solid #000;
         }
+
+        .guarantee-text {
+            color: #3be04f;
+            font-size: 1.3em;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Orden de trabajo</h1>
+        <h1>ORDEN DE TRABAJO</h1>
         <div class="work-order-header">
             <div>
                 <strong>Nro de Orden:</strong>#{{ WorkOrderId }}<br>
@@ -87,10 +92,14 @@
                 <strong>Cliente:</strong> {{ Customer }}<br>
             </div>
             <div>
+                {% if (Guarantee) %}
+                <strong class="guarantee-text">GARANTIA</strong><br>
+                {% endif %}
                 <strong>Estado:</strong> Completed<br>
                 <strong>Placa:</strong> {{ Plate }}<br>
                 <strong>Modelo:</strong> {{ Model }}<br>
                 <strong>Chasis:</strong> {{ Chassis }}<br>
+                <strong>Kilometraje:</strong> {{ Kilometers }} km.<br>
             </div>
         </div>
         <div class="description">
