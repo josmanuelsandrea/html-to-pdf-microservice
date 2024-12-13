@@ -6,11 +6,15 @@ from io import BytesIO
 from tools.dotstring import add_dots_to_number
 
 import os
+# import logging
+# logger = logging.getLogger('weasyprint')
+# logger.addHandler(logging.FileHandler('weasyprint.log'))
 
 app = FastAPI()
 
 template_path = os.path.join(os.path.dirname(__file__), "templates")
 env = Environment(loader=FileSystemLoader(template_path))
+this_folder = os.path.dirname(os.path.abspath(__file__))
 
 @app.post("/generate-pdf/")
 async def generate_pdf(request: Request):
@@ -24,9 +28,13 @@ async def generate_pdf(request: Request):
     template_data["Description"] = template_data["Description"].replace("\n", "<br>")
 
     template_data["Kilometers"] = add_dots_to_number(template_data["Kilometers"])
+    # template_data["ImagePath"] = "file://" + os.path.join(this_folder, "media", "scania.png")
+    template_data["ImagePath"] = f'''file:///{this_folder}/media/scania.png'''  # "file://" + os.path.join(this_folder, "media", "scania.png")
+    print(template_data["ImagePath"])
 
 
     html_content = template.render(template_data)  # Renderiza la plantilla con los datos
+
     
     # Generar el PDF usando WeasyPrint
     pdf_stream = BytesIO()
