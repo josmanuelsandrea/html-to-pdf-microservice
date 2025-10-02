@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work Order</title>
     <style>
+        @page {
+            size: A4;
+            margin: 18mm 15mm 18mm 15mm;
+
+            /* Header (top-right) con la hora de impresión en TODAS las páginas */
+            @top-right {
+                content: "Impreso: {{ PrintTimestamp }}";
+                font-size: 10pt;
+                color: #666;
+            }
+
+            /* Opcional: número de página */
+            @bottom-center {
+                content: "Página " counter(page) " de " counter(pages);
+                font-size: 10pt;
+                color: #666;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
         }
+
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -20,55 +41,69 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        h1, h2 {
+
+        h1,
+        h2 {
             text-align: center;
             margin: 10px 0;
         }
+
         .work-order-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
         }
+
         .work-order-header div {
             width: 45%;
         }
+
         .description {
             margin: 20px 0;
             padding: 10px;
             background: #f4f4f4;
             border-left: 4px solid #007bff;
         }
+
         .spare-parts {
             margin-top: 20px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
-        th, td {
+
+        th,
+        td {
             text-align: left;
             border: 1px solid #ddd;
             padding: 10px;
         }
+
         th {
             background-color: #f4f4f4;
         }
+
         .footer {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9em;
             color: #666;
         }
+
         .sign-section {
             margin-top: 30px;
             text-align: left;
         }
+
         .signature-line {
             margin-top: 20px;
             display: flex;
             justify-content: space-between;
         }
+
         .signature-line div {
             width: 45%;
             text-align: center;
@@ -82,6 +117,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -133,8 +169,11 @@
             </table>
         </div>
         <div class="footer">
-            <p>Gracias por su confianza</p>
             <div class="sign-section">
+                <br>
+                <br>
+                <br>
+                <br>
                 <div class="signature-line">
                     <div>Revisado por bodega</div>
                     <div>Revisado por taller</div>
@@ -143,4 +182,5 @@
         </div>
     </div>
 </body>
+
 </html>
