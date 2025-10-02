@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Dict, Any
+from zoneinfo import ZoneInfo
 
 # Importa tu helper de miles
 from tools.dotstring import add_dots_to_number
@@ -33,7 +34,8 @@ def add_print_timestamp(data: Dict[str, Any]) -> Dict[str, Any]:
     Agrega el timestamp de impresión (YYYY-mm-dd HH:MM:SS).
     """
     d = dict(data)
-    d["PrintTimestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    local_tz = ZoneInfo("America/Guayaquil")
+    d["PrintTimestamp"] = datetime.now(local_tz).strftime("%Y-%m-%d %H:%M:%S")
     return d
 
 def sample_data(request) -> Dict[str, Any]:
@@ -41,7 +43,7 @@ def sample_data(request) -> Dict[str, Any]:
     Datos de muestra para /preview (incluye logo por HTTP).
     """
     # import local para evitar dependencias cruzadas
-    from helpers.paths import image_path_for_preview
+    from tools.image_rendering_tools import image_path_for_preview
 
     return {
         "WorkOrderId": 1234,
