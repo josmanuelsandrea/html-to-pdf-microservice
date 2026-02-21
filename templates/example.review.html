@@ -165,9 +165,18 @@
         </div>
         <div class="work-order-header">
             <div>
-                <strong>Nro de Orden:</strong>#{{ WorkOrderId }}<br>
+                <strong>Nro de Orden:</strong> #{{ WorkOrderId }}<br>
                 <strong>Fecha:</strong> {{ Date }}<br>
                 <strong>Cliente:</strong> {{ Customer }}<br>
+                {% if CustomerIdRuc %}
+                <strong>RUC/Cédula:</strong> {{ CustomerIdRuc }}<br>
+                {% endif %}
+                {% if CustomerPhone %}
+                <strong>Teléfono:</strong> {{ CustomerPhone }}<br>
+                {% endif %}
+                {% if CustomerAddress %}
+                <strong>Dirección:</strong> {{ CustomerAddress }}<br>
+                {% endif %}
             </div>
             <div>
                 {% if (Guarantee) %}
