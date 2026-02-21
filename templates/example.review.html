@@ -115,6 +115,45 @@
             color: #3be04f;
             font-size: 1.3em;
         }
+
+        .cost-summary {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .cost-summary table {
+            width: auto;
+            min-width: 280px;
+            margin: 0;
+            border-collapse: collapse;
+        }
+
+        .cost-summary td {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .cost-summary .cost-label {
+            text-align: left;
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        .cost-summary .cost-value {
+            text-align: right;
+        }
+
+        .cost-summary .total-row td {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+
+        td.text-right {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -154,7 +193,9 @@
                     <tr>
                         <th>Codigo</th>
                         <th>Descripcion</th>
-                        <th>Cantidad</th>
+                        <th style="text-align:right;">Cantidad</th>
+                        <th style="text-align:right;">Precio Unit.</th>
+                        <th style="text-align:right;">Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,10 +203,29 @@
                     <tr>
                         <td>{{ spare_part.Code }}</td>
                         <td>{{ spare_part.Description }}</td>
-                        <td>{{ spare_part.Quantity }}</td>
+                        <td class="text-right">{{ spare_part.Quantity }}</td>
+                        <td class="text-right">{{ spare_part.UnitPrice }}</td>
+                        <td class="text-right">{{ spare_part.Subtotal }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
+            </table>
+        </div>
+
+        <div class="cost-summary">
+            <table>
+                <tr>
+                    <td class="cost-label">Mano de obra</td>
+                    <td class="cost-value">{{ LaborCost }}</td>
+                </tr>
+                <tr>
+                    <td class="cost-label">Repuestos</td>
+                    <td class="cost-value">{{ PartsCost }}</td>
+                </tr>
+                <tr class="total-row">
+                    <td class="cost-label">TOTAL</td>
+                    <td class="cost-value">{{ TotalCost }}</td>
+                </tr>
             </table>
         </div>
         <div class="footer">
