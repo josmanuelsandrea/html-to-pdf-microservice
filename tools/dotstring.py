@@ -1,3 +1,19 @@
+def format_currency(value) -> str:
+    """
+    Formatea un valor numérico como moneda con separador de miles (.)
+    y dos decimales separados por coma.
+    Ej: 1234.56 -> "$ 1.234,56"
+    """
+    try:
+        amount = float(str(value).replace(",", "."))
+    except (ValueError, TypeError):
+        return str(value)
+
+    integer_part = int(amount)
+    cents = round((amount - integer_part) * 100)
+    return f"$ {add_dots_to_number(integer_part)},{cents:02d}"
+
+
 def add_dots_to_number(number):
     """
     Adds a dot every three digits in the given number.

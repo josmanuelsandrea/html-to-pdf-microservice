@@ -3,13 +3,15 @@ from typing import Dict, Any
 from zoneinfo import ZoneInfo
 
 # Importa tu helper de miles
-from tools.dotstring import add_dots_to_number
+from tools.dotstring import add_dots_to_number, format_currency
 
 def preprocess_payload(data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Ajusta campos del payload:
     - Reemplaza \n por <br> en Description
     - Formatea Kilometers con puntos de miles (si existe)
+    - Formatea LaborCost, PartsCost, TotalCost como moneda
+    - Formatea UnitPrice y Subtotal de cada item en SpareList
     """
     d = dict(data)  # copia superficial
 
@@ -20,12 +22,25 @@ def preprocess_payload(data: Dict[str, Any]) -> Dict[str, Any]:
     kms = d.get("Kilometers")
     if kms is not None:
         try:
-            # por si llega como string
             kms_int = int(str(kms).replace(".", "").replace(",", ""))
             d["Kilometers"] = add_dots_to_number(kms_int)
         except Exception:
-            # si no se puede convertir, lo dejamos como vino
             pass
+
+    for cost_field in ("LaborCost", "PartsCost", "TotalCost"):
+        if d.get(cost_field) is not None:
+            d[cost_field] = format_currency(d[cost_field])
+
+    spare_list = d.get("SpareList")
+    if isinstance(spare_list, list):
+        formatted_spares = []
+        for item in spare_list:
+            item = dict(item)
+            for price_field in ("UnitPrice", "Subtotal"):
+                if item.get(price_field) is not None:
+                    item[price_field] = format_currency(item[price_field])
+            formatted_spares.append(item)
+        d["SpareList"] = formatted_spares
 
     return d
 
@@ -49,6 +64,9 @@ def sample_data(request) -> Dict[str, Any]:
         "WorkOrderId": 1234,
         "Date": "2025-10-02",
         "Customer": "EMAC",
+        "CustomerAddress": "Av. 10 de Agosto 123 y Av. Quito",
+        "CustomerPhone": "0987654321",
+        "CustomerIdRuc": "0190012345001",
         "Guarantee": True,
         "Plate": "ABC-123",
         "Model": "Scania K310",
@@ -57,9 +75,12 @@ def sample_data(request) -> Dict[str, Any]:
         "Description": "Cambio de aceite y filtros.<br>Revisión de frenos.",
         "ImagePath": image_path_for_preview(request),
         "SpareList": [
-            {"Code": "OIL-15W40", "Description": "Aceite 15W-40", "Quantity": 20},
-            {"Code": "FLT-001", "Description": "Filtro de aceite", "Quantity": 1},
-            {"Code": "FLT-002", "Description": "Filtro de aire", "Quantity": 1},
+            {"Code": "OIL-15W40", "Description": "Aceite 15W-40",   "Quantity": 20, "UnitPrice": "12.50",  "Subtotal": "250.00"},
+            {"Code": "FLT-001",   "Description": "Filtro de aceite", "Quantity": 1,  "UnitPrice": "35.00",  "Subtotal": "35.00"},
+            {"Code": "FLT-002",   "Description": "Filtro de aire",   "Quantity": 1,  "UnitPrice": "28.00",  "Subtotal": "28.00"},
         ],
+        "LaborCost": "150.00",
+        "PartsCost": "313.00",
+        "TotalCost": "463.00",
         "PrintTimestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     }
