@@ -95,20 +95,25 @@
 
         .sign-section {
             margin-top: 30px;
-            text-align: left;
-        }
-
-        .signature-line {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .signature-line div {
-            width: 45%;
             text-align: center;
-            padding-top: 30px;
+        }
+
+        .client-signature {
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .client-signature img {
+            display: block;
+            max-height: 80px;
+            margin: 0 auto 8px auto;
+        }
+
+        .client-signature .sig-label {
             border-top: 1px solid #000;
+            padding-top: 6px;
+            font-size: 0.9em;
         }
 
         .guarantee-text {
@@ -170,14 +175,17 @@
         </div>
         <div class="footer">
             <div class="sign-section">
-                <br>
-                <br>
-                <br>
-                <br>
-                <div class="signature-line">
-                    <div>Revisado por bodega</div>
-                    <div>Revisado por taller</div>
+                {% if Signature %}
+                <div class="client-signature">
+                    <img src="data:image/png;base64,{{ Signature }}" alt="Firma del cliente">
+                    <div class="sig-label">Firma del cliente</div>
                 </div>
+                {% else %}
+                <div class="client-signature">
+                    <div style="height: 80px;"></div>
+                    <div class="sig-label">Firma del cliente</div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
